@@ -1,0 +1,4 @@
+description: A basic hasura project with some sample data
+keywords: base, getting-started
+name: hello-world
+platformVersion: v0.15.3
