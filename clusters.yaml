@@ -3,6 +3,5 @@
     configmap: controller-conf
     namespace: hasura
   data: null
-  kubeContext: h34-abominate10-stg
-  name: h34-abominate10-stg
-  services: null
+  kubeContext: h34-bleat82-stg
+  name: h34-bleat82-stg
