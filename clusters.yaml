@@ -1,7 +1,6 @@
-- alias: hasura
-  config:
-    configmap: controller-conf
-    namespace: hasura
-  data: null
-  kubeContext: h34-bleat82-stg
-  name: h34-bleat82-stg
+# Stores the information about the clusters added to this project
+# #
+# # - This file gets populated with the cluster information when you run
+# #   `hasura cluster add`
+# # - When your project is published on hasura hub, this file will not
+# #   have any information about your clusters
