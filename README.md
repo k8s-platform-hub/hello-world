@@ -166,7 +166,8 @@ Simple CRUD Operations are supported via an intuitive JSON query language.
     "args": {
         "table": "article",
         "columns": [
-            "content"
+            "content",
+            "rating"
         ],
         "where": {
             "$and": [
