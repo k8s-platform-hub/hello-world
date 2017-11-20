@@ -4,6 +4,7 @@ var request = require('request');
 var router = express.Router();
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
+var path = require("path");
 require('request-debug')(request);
 
 var hasuraExamplesRouter = require('./hasuraExamples');
@@ -16,6 +17,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', hasuraExamplesRouter);
 

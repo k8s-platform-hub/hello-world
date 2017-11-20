@@ -280,13 +280,12 @@ You can also use the standard where/order_by/offset/limit conditions on the arti
                 "where": {
                     "rating": {
                         "$gte": "3"
-                    },
-                "order_by": [
-                    {
-                        "column": "rating",
-                        "order": "desc"
                     }
-                }
+                },
+                "order_by": [{
+                    "column": "rating",
+                    "order": "desc"
+                }]
             }
         ],
         "where": {
@@ -518,7 +517,7 @@ The project (a.k.a. project directory) has a particular directory structure and 
 └── services
     ├── adminer
     │   └── k8s.yaml
-    └── flask
+    └── app
         ├── src/
         ├── k8s.yaml
         └── Dockerfile
