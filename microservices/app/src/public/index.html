@@ -315,6 +315,8 @@
       <pre><code class="lang-bash">$ hasura api-console
       </code></pre>
       <p>And then navigate to the <a href="http://localhost:8080/learning-center"> Learning center </a> tab.</p>
+      <br>
+      <p>This microservice demonstrates the use of the Data APIs at the /get_articles endpoint. Since this cluster comes with sample data in the form of articles and authors, we make use of the Hasura Data APIs to fetch all articles. Check <a href="/get_articles">here</a> 
       <h3 id="auth-apis">Auth APIs</h3>
       <p>Every app almost always requires some form of authentication. This is useful to identify a user and provide some sort of personalised experience to the user. Hasura provides various types of authentication (username/password, mobile/otp, email/password, Google, Facebook etc).</p>
       <p>You can try out these in the <code>API EXPLORER</code> tab of the <code>api console</code>. To learn more, check out our <a href="https://docs.hasura-stg.hasura-app.io/0.15/manual/users/index.html">docs</a></p>
@@ -353,10 +355,10 @@
       <pre><code>$ hasura microservice generate &lt;service-name&gt; -i &lt;docker-image&gt; -p &lt;port&gt;
       </code>
       </pre><h4 id="git-push-microservice">git push microservice</h4>
-      If you have some API or a webapp code and wish to deploy it on Hasura, you can do it using git-push. You will need a docker file. Just run the following commands to generate a microservice. Read more about deploying your code <a href="https://docs.hasura.io/0.15/manual/custom-microservices/index.html">here</a>.
+      If you have some API or a webapp code and wish to deploy it on Hasura, you can do it using git-push. You will need a docker file. Just run the following commands to generate configuration for a microservice. Read more about deploying your code <a href="https://docs.hasura.io/0.15/manual/custom-microservices/index.html">here</a>.
       <pre><code class="lang-bash">$ hasura microservice generate &lt;service-name&gt;
       </code></pre>
-      <p>Once you have added a new service, you need to add a route to access the service.</p>
+      <p>Once you have generated a new service, you need to add a route to access the service.</p>
       <h4 id="add-route-for-the-service-created-">Add route for the service created.</h4>
       <pre><code class="lang-bash">$ hasura conf generate-route &lt;service-name&gt; &gt;&gt; conf/routes.yaml
       </code></pre>
@@ -367,7 +369,7 @@
       <p>This will generate the remotes configuration, which will be appended to the conf/ci.yaml file under the {{ cluster.name }} key.<br>    Make sure it is properly indented!</p>
       <h4 id="apply-your-changes">Apply your changes</h4>
       <pre><code>$ git add .
-      $ git commit -m &quot;Added a new service&quot;
+      $ git commit -m &quot;Adding a new service&quot;
       $ git push hasura master
       </code></pre><h1 id="hello-world">hello-world</h1>
       <p>A blank template to be used as a starting point to build projects on Hasura. A &quot;project&quot; is a &quot;gittable&quot; directory in the file system, which captures all the information regarding clusters, services and migrations. It can also be used to keep source code for custom services that you write.</p>
