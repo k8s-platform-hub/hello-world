@@ -6,11 +6,10 @@ This quickstart consists of a basic hasura project with a simple nodejs express 
 ## Sections
 
 * [Introduction](#introduction)
-* [Quickstart](#quickstart)
 * [Data API](#data-apis)
 * [Auth API](#auth-apis)
 * [Filestore API](#filestore-apis)
-* [FAQ](#faq)
+* [Notify API](#notify-apis)
 
 ## Introduction
 
