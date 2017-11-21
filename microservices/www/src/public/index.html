@@ -326,7 +326,8 @@
       <p>Just like the Data service, the File API supports Role based access control to the files, along with custom authorization hooks. (Check out our <a href="https://docs.hasura.io/"> documentation </a> for more!)</p>
       <h4 id="uploading-files">Uploading files</h4>
       <p>Uploading a file requires you to generate a file_id and make a post request with the content of the file in the request body and the correct mime type as the content-type header.</p>
-      <pre><code class="lang-http">POST https://filestore.project-name.hasura-app.io/v1/file/05c40f1e-cdaf-4e29-8976-38c899 HTTP/1.1
+      <pre><code class="lang-http">
+      POST https://filestore.project-name.hasura-app.io/v1/file/05c40f1e-cdaf-4e29-8976-38c899 HTTP/1.1
       Content-Type: image/png
       Authorization: Bearer &lt;token&gt;
 
@@ -336,7 +337,8 @@
       <h4 id="downloading-files">Downloading files</h4>
       <p>Downloading a file requires the unique file id that was used to upload it. This can be stored in the database and retrieved for download.</p>
       <p>To download a particular file, what is required is a simple GET query.</p>
-      <pre><code class="lang-http">GET https://filestore.project-name.hasura-app.io/v1/file/05c40f1e-cdaf-4e29-8976-38c899 HTTP/1.1
+      <pre><code class="lang-http">
+      GET https://filestore.project-name.hasura-app.io/v1/file/05c40f1e-cdaf-4e29-8976-38c899 HTTP/1.1
       Authorization: Bearer &lt;token&gt;
       </code></pre>
       <h4 id="permissions">Permissions</h4>
@@ -368,7 +370,8 @@
       </code></pre>
       <p>This will generate the remotes configuration, which will be appended to the conf/ci.yaml file under the {{ cluster.name }} key.<br>    Make sure it is properly indented!</p>
       <h4 id="apply-your-changes">Apply your changes</h4>
-      <pre><code>$ git add .
+      <pre><code>
+      $ git add .
       $ git commit -m &quot;Adding a new service&quot;
       $ git push hasura master
       </code></pre><h1 id="hello-world">hello-world</h1>
@@ -404,7 +407,8 @@
       <p>This file contains some metadata about the project, namely a name, description and some keywords. Also contains <code>platformVersion</code> which says which Hasura platform version is compatible with this project.</p>
       <h3 id="-clusters-yaml-"><code>clusters.yaml</code></h3>
       <p>Info about the clusters added to this project can be found in this file. Each cluster is defined by it&#39;s name allotted by Hasura. While adding the cluster to the project you are prompted to give an alias, which is just hasura by default. The <code>kubeContext</code> mentions the name of kubernetes context used to access the cluster, which is also managed by hasura. The <code>config</code> key denotes the location of cluster&#39;s metadata on the cluster itself. This information is parsed and cluster&#39;s metadata is appended while conf is rendered. <code>data</code> key is for holding custom variables that you can define.</p>
-      <pre><code class="lang-yaml">- name: h34-ambitious93-stg
+      <pre><code class="lang-yaml">
+        - name: h34-ambitious93-stg
         alias: hasura
         kubeContext: h34-ambitious93-stg
         config:
