@@ -1,7 +1,7 @@
 # Hasura Hello World
 > Get started with a free Hasura Project
 
-This quickstart consists of a basic hasura project with a simple nodejs express app running on it. Once this project is deployed on to a hasura cluster, you will have the nodejs app will run at https://app.cluster-name.hasura-app.io
+This quickstart consists of a basic hasura project with a simple nodejs express app running on it. Once this project is deployed on to a hasura cluster, you will have the nodejs app will run at https://www.cluster-name.hasura-app.io
 
 ## Sections
 
@@ -16,7 +16,7 @@ This quickstart consists of a basic hasura project with a simple nodejs express 
 This quickstart project comes with the following by default:
 1. A basic hasura project
 2. Two tables `article` and `author` with some dummy data
-3. A basic nodejs-express app which runs on the `app` subdomain.
+3. A basic nodejs-express app which runs on the `www` subdomain.
 
 ## Quickstart
 
@@ -74,7 +74,7 @@ Access the **api-console** via the following command:
 $ hasura api-console
 ```
 
-This will open up Console UI on the browser. You can access it at [http://localhost:8080](http://localhost:8080)
+This will open up Console UI on the browser. You can access it at [http://localhost:9695](http://localhost:9695)
 
 ## Usage
 
@@ -384,17 +384,6 @@ This query sets insert permissions on the article table for the user role so tha
 
 This is very useful for a more complex schema, say a forum, with several types of users like admins, moderators, thread owners, and normal users.
 
-
-#### Performance
-
-The Hasura Data APIs are heavily optimized for performance, and a comparison can be found on our [ website ](https://hasura.io/compare).
-
-Explore the Data APIs further using the learning-center in the API console!
-Bring up the API console using
-```bash
-$ hasura api-console
-```
-And then navigate to the [ Learning center ](http://localhost:8080/learning-center) tab.
 ### Auth APIs
 
 Every app almost always requires some form of authentication. This is useful to identify a user and provide some sort of personalised experience to the user. Hasura provides various types of authentication (username/password, mobile/otp, email/password, Google, Facebook etc).
@@ -444,20 +433,20 @@ You can also set up your own authorization webhook!
 
 ### Notify APIs
 
-Check out the [ Learning center ](http://localhost:8080/learning-center) tab on the API Console for short tutorials on all the APIs!
+Check out the [ Learning center ](http://localhost:9695/learning-center) tab on the API Console for short tutorials on all the APIs!
 
 ## Add your own custom microservice
 
 #### Docker microservice
 
 ```
-$ hasura microservice add <service-name> -i <docker-image> -p <port>
+$ hasura microservice generate <service-name> -i <docker-image> -p <port>
 ```
 
 #### git push microservice
 
 ```bash
-$ hasura microservice add <service-name>
+$ hasura microservice generate <service-name>
 ```
 
 Once you have added a new service, you need to add a route to access the service.
@@ -465,19 +454,18 @@ Once you have added a new service, you need to add a route to access the service
 #### Add route for the service created.
 
 ```bash
-$ hasura route generate <service-name>
+$ hasura conf generate-route <service-name> >> conf/routes.yaml
 ```
 
-It will output the route information that needs to be put into conf/routes.yaml file.
+It will generate the route configuration for the service and append it to `conf/routes.yaml`.
 
 #### Add a remote for the service
 
 ```bash
-$ hasura remotes generate <service-name>
+$ hasura conf generate-route <service-name> >> conf/ci.yaml
 ```
 
-This will output the remotes configuration, which should be added to the conf/remotes.yaml file under the {{ cluster.name }} key.
-    Make sure it is properly indented!
+This will append the remotes configuration to the conf/remotes.yaml file under the {{ cluster.name }} key.
 
 #### Apply your changes
 
@@ -516,9 +504,7 @@ The project (a.k.a. project directory) has a particular directory structure and 
 │   ├── 1504788327_create_table_user.up.yaml
 │   └── 1504788327_create_table_user.up.sql
 └── services
-    ├── adminer
-    │   └── k8s.yaml
-    └── app
+    └── www
         ├── src/
         ├── k8s.yaml
         └── Dockerfile
