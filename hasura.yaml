@@ -1,4 +1,5 @@
 description: A basic hasura project with some sample data
 keywords: hello-world, getting-started
+media: {}
 name: hello-world
 platformVersion: v0.15.8
