@@ -315,8 +315,6 @@
       <pre><code class="lang-bash">$ hasura api-console
       </code></pre>
       <p>And then navigate to the <a href="http://localhost:9695/learning-center"> Learning center </a> tab.</p>
-      <br>
-      <p>This microservice demonstrates the use of the Data APIs at the /get_articles endpoint. Since this cluster comes with sample data in the form of articles and authors, we make use of the Hasura Data APIs to fetch all articles. Check <a href="/get_articles">here</a>.
       <h3 id="auth-apis">Auth APIs</h3>
       <p>Every app almost always requires some form of authentication. This is useful to identify a user and provide some sort of personalised experience to the user. Hasura provides various types of authentication (username/password, mobile/otp, email/password, Google, Facebook etc).</p>
       <p>You can try out these in the <code>API EXPLORER</code> tab of the <code>api console</code>. To learn more, check out our <a href="https://docs.hasura.io/0.15/manual/users/index.html">docs</a></p>
@@ -374,8 +372,10 @@
       $ git add .
       $ git commit -m &quot;Adding a new service&quot;
       $ git push hasura master
-      </code></pre><h1 id="hello-world">hello-world</h1>
-      <p>A blank template to be used as a starting point to build projects on Hasura. A &quot;project&quot; is a &quot;gittable&quot; directory in the file system, which captures all the information regarding clusters, services and migrations. It can also be used to keep source code for custom services that you write.</p>
+      </code></pre>
+      <br>
+      <p>This quickstart project comes with one such microservice written using NodeJS-Express. It microservice demonstrates the use of the Data APIs at the /get_articles endpoint. Since this cluster comes with sample data in the form of articles and authors, we make use of the Hasura Data APIs to fetch all articles. Check <a href="/get_articles">here</a>.
+      </p>
       <h2 id="files-and-directories">Files and Directories</h2>
       <p>The project (a.k.a. project directory) has a particular directory structure and it has to be maintained strictly, else <code>hasura</code> cli would not work as expected. A representative project is shown below:</p>
       <pre><code>.
