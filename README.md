@@ -10,6 +10,7 @@ This quickstart consists of a basic hasura project with a simple nodejs express 
 * [Auth API](#auth-apis)
 * [Filestore API](#file-apis)
 * [Notify API](#notify-apis)
+* [Custom Microservice](#add-your-own-custom-microservice)
 
 ## Introduction
 
