@@ -70,7 +70,8 @@
       <p>Simple CRUD Operations are supported via an intuitive JSON query language.</p>
       <ul>
       <li><p>Select all entries in the article table, ordered by rating:</p>
-      <pre><code class="lang-json">{
+      <pre><code class="lang-json">
+      {
         &quot;type&quot;: &quot;select&quot;,
         &quot;args&quot;: {
             &quot;table&quot;: &quot;article&quot;,
@@ -85,7 +86,8 @@
       </code></pre>
       </li>
       <li><p>Update a particular entry in the author table:</p>
-      <pre><code class="lang-json">{
+      <pre><code class="lang-json">
+      {
         &quot;type&quot;: &quot;update&quot;,
         &quot;args&quot;: {
             &quot;table&quot;: &quot;author&quot;,
@@ -99,7 +101,8 @@
       </code></pre>
       </li>
       <li><p>The where clause on the Data API is a very expressive boolean expression, and can be arbitrarily complex. For example:</p>
-      <pre><code class="lang-json">{
+      <pre><code class="lang-json">
+      {
         &quot;type&quot;: &quot;select&quot;,
         &quot;args&quot;: {
             &quot;table&quot;: &quot;article&quot;,
@@ -141,7 +144,8 @@
       <p>This query will select all the articles with ratings above 3, which were either written by an author with author_id 7 or, which have a title starting with &quot;Editorial&quot;. This can be used to construct complex queries that feel very intuitive.</p>
       </li>
       <li><p>Pagination on queries is supported through limit and offset parameters:</p>
-      <pre><code class="lang-json">{
+      <pre><code class="lang-json">
+      {
         &quot;type&quot;: &quot;select&quot;,
         &quot;args&quot;: {
             &quot;table&quot;: &quot;article&quot;,
@@ -156,7 +160,8 @@
       </li>
       </ul>
       <p>This can be used to perform queries directly on the postgres db:</p>
-      <pre><code class="lang-json">{
+      <pre><code class="lang-json">
+      {
           &quot;type&quot; : &quot;run_sql&quot;,
           &quot;args&quot; : {
               &quot;sql&quot; : &quot;CREATE TABLE category (
@@ -174,7 +179,8 @@
       <li>Authors have an array/one-to-many relationship with articles.</li>
       </ol>
       <p>We can define these relationships on the database, and use them to get related data by expanding the relationships in the columns array:</p>
-      <pre><code class="lang-json">{
+      <pre><code class="lang-json">
+      {
           &quot;type&quot;: &quot;select&quot;,
           &quot;args&quot;: {
               &quot;table&quot;: &quot;author&quot;,
@@ -194,7 +200,8 @@
       </code></pre>
       <p>This query will add an array of article objects alongside the name of the author.</p>
       <p>You can also use the standard where/order_by/offset/limit conditions on the article objects:</p>
-      <pre><code class="lang-json">{
+      <pre><code class="lang-json">
+      {
           &quot;type&quot;: &quot;select&quot;,
           &quot;args&quot;: {
               &quot;table&quot;: &quot;author&quot;,
@@ -232,7 +239,8 @@
       <h4 id="aggregations">Aggregations</h4>
       <p>The JSON based query language is designed to be simple yet powerful. That said, there will be queries that cannot be expressed through the select query, like getting the number of ratings given for each article, if you have the ratings by user data stored in another table.</p>
       <p>To express complex queries like aggregations, window functions, custom joins etc, you can directly use SQL.</p>
-      <pre><code class="lang-json">{
+      <pre><code class="lang-json">
+      {
         &quot;type&quot; : &quot;run_sql&quot;,
         &quot;args&quot; : {
           &quot;sql&quot; : &quot;CREATE VIEW article_rating_count AS...&quot;,
@@ -240,7 +248,8 @@
       }
       </code></pre>
       <p>If you can define a view with your query in SQL, you can then track it with the Data APIs, and use the JSON query language to access it.</p>
-      <pre><code class="lang-json">{
+      <pre><code class="lang-json">
+      {
         &quot;type&quot; : &quot;add_existing_table_or_view&quot;,
         &quot;args&quot; : {
           &quot;name&quot; : &quot;article_rating_count&quot;
@@ -253,7 +262,8 @@
       <p>This is accomplished through the session middleware that Hasura provides. This session middleware provides the Data API with the role and user id of the current user with every request, and this lets the Data service apply the permissions as appropriate.</p>
       <ul>
       <li><p>The permissions can be based on a user id check from the information provided by the session middleware:</p>
-      <pre><code class="lang-json">{
+      <pre><code class="lang-json">
+      {
         &quot;type&quot; : &quot;create_insert_permission&quot;,
         &quot;args&quot; : {
             &quot;table&quot; : &quot;article&quot;,
@@ -269,7 +279,8 @@
       <p>This query will set select permissions on the article table for the user role so that users will be able only insert entries into the article table with author_ids matching their user ids. This means that the database will not permit a user to write an article in another user&#39;s name.<br>This sort of a constraint is a property of the data, and therefore should be accomplished in the database, and the permission layer provides the perfect tools for the job.<br>Apart from create_insert_permissions, the Data API also provides other types of queries to create select/update and delete permissions. This way, permissions can be set on all CRUD operations.</p>
       </li>
       <li><p>The permission object in the json query uses syntax very similar to a where clause in the select query, making it extremely expressive,  as shown here:</p>
-      <pre><code class="lang-json">{
+      <pre><code class="lang-json">
+      {
         &quot;type&quot; : &quot;create_update_permission&quot;,
         &quot;args&quot; : {
             &quot;table&quot; : &quot;article&quot;,
