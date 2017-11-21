@@ -349,8 +349,11 @@
       <p>Check out the <a href="http://localhost:8080/learning-center"> Learning center </a> tab on the API Console for short tutorials on all the APIs!</p>
       <h2 id="add-your-own-custom-microservice">Add your own custom microservice</h2>
       <h4 id="docker-microservice">Docker microservice</h4>
+      <p> This will just pull the image from docker-hub and run it as a microservice on Hasura. Just run the command
       <pre><code>$ hasura microservice generate &lt;service-name&gt; -i &lt;docker-image&gt; -p &lt;port&gt;
-      </code></pre><h4 id="git-push-microservice">git push microservice</h4>
+      </code>
+      </pre><h4 id="git-push-microservice">git push microservice</h4>
+      If you have some API or a webapp code and wish to deploy it on Hasura, you can do it using git-push. You will need a docker file. Just run the following commands to generate a microservice. Read more about deploying your code <a href="https://docs.hasura.io/0.15/manual/custom-microservices/index.html">here</a>.
       <pre><code class="lang-bash">$ hasura microservice generate &lt;service-name&gt;
       </code></pre>
       <p>Once you have added a new service, you need to add a route to access the service.</p>
