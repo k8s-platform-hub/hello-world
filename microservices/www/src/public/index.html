@@ -9,7 +9,7 @@
       <blockquote>
       <p>Get started with a free Hasura Project</p>
       </blockquote>
-      <p>This quickstart consists of a basic hasura project with a simple nodejs express microservice running on it. Since you have pushed the project, this microservice is running at <a href="/">https://app.cluster-name.hasura-app.io</a></p>
+      <p>This quickstart consists of a basic hasura project with a simple nodejs express microservice running on it. Since you have pushed the project, this microservice is running at <a href="/">https://www.cluster-name.hasura-app.io</a></p>
       <h2 id="sections">Sections</h2>
       <ul>
         <li><a href="#introduction">Introduction</a></li>
@@ -24,7 +24,7 @@
       <ol>
         <li>A basic hasura project</li>
         <li>Two tables <code>article</code> and <code>author</code> with some dummy data</li>
-        <li>A basic nodejs-express app which runs on the <code>app</code> subdomain.</li>
+        <li>A basic nodejs-express app which runs on the <code>www</code> subdomain.</li>
       </ol>
       <h2 id="usage">Usage</h2>
       <p>Now that you have deployed the project on your cluster, you would want to manage the schema and explore the Hasura APIs.</p>
@@ -319,7 +319,7 @@
       <p>This microservice demonstrates the use of the Data APIs at the /get_articles endpoint. Since this cluster comes with sample data in the form of articles and authors, we make use of the Hasura Data APIs to fetch all articles. Check <a href="/get_articles">here</a>.
       <h3 id="auth-apis">Auth APIs</h3>
       <p>Every app almost always requires some form of authentication. This is useful to identify a user and provide some sort of personalised experience to the user. Hasura provides various types of authentication (username/password, mobile/otp, email/password, Google, Facebook etc).</p>
-      <p>You can try out these in the <code>API EXPLORER</code> tab of the <code>api console</code>. To learn more, check out our <a href="https://docs.hasura-stg.hasura-app.io/0.15/manual/users/index.html">docs</a></p>
+      <p>You can try out these in the <code>API EXPLORER</code> tab of the <code>api console</code>. To learn more, check out our <a href="https://docs.hasura.io/0.15/manual/users/index.html">docs</a></p>
       <h3 id="file-apis">File APIs</h3>
       <p>Sometimes, you would want to upload some files to the cloud. This can range from a profile pic for your user or images for things listed on your app. You can securely add, remove, manage, update files such as pictures, videos, documents using the Hasura filestore.</p>
       <p>This is done via simple POST, GET and DELETE requests on a single endpoint.</p>
@@ -395,10 +395,8 @@
       │   ├── 1504788327_create_table_user.down.sql
       │   ├── 1504788327_create_table_user.up.yaml
       │   └── 1504788327_create_table_user.up.sql
-      └── services
-          ├── adminer
-          │   └── k8s.yaml
-          └── flask
+      └── microservices
+          └── www
               ├── src/
               ├── k8s.yaml
               └── Dockerfile
