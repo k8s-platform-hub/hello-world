@@ -54,15 +54,14 @@ The Data API provides the following features:
 
 As mentioned earlier, this quickstart app comes with two pre-created tables `author` and `article`.
 
-```
-**author**
+#### author
 
 column | type
 --- | ---
 id | integer NOT NULL *primary key*
 name | text NOT NULL
 
-**article**
+#### article
 
 column | type
 --- | ---
@@ -71,7 +70,7 @@ title | text NOT NULL
 content | text NOT NULL
 rating | numeric NOT NULL
 author_id | integer NOT NULL
-```
+
 
 Alternatively, you can also view the schema for these tables on the api console by heading over to the tab named `data`.
 
