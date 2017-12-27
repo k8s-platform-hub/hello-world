@@ -1,27 +1,79 @@
 # Hasura Hello World
-> Get started with a free Hasura Project
 
-This quickstart consists of a basic hasura project with a simple nodejs express app running on it. Once this project is deployed on to a hasura cluster, you will have the nodejs app will run at https://www.cluster-name.hasura-app.io
+This quickstart will take you over Hasura's instant backend APIs (BaaS) and how to deploy your custom code too.
+Once you go through this README, you'll be able to configure and use the Hasura APIs for your apps and you'll also
+know how to deploy your own code.
 
-## Sections
+## Basic Hasura concepts
 
-* [Introduction](#introduction)
-* [Data API](#data-apis)
-* [Auth API](#auth-apis)
-* [Filestore API](#file-apis)
-* [Notify API](#notify-apis)
-* [Custom Microservice](#add-your-own-custom-microservice)
+There are 3 core concepts that drive everything you do with Hasura. 1) Hasura projects, 2) Hasura clusters and 3) deploying your project to the cluster. The [hasura CLI](https://docs.hasura.io/0.15/manual/install-hasura-cli.html) tool is required to run manage everything Hasura.
 
-## Introduction
+![core-hasura-concepts](https://docs.hasura.io/0.15/_images/core-hasura-concepts.png)
 
-This quickstart project comes with the following by default:
-1. A basic hasura project
-2. Two tables `article` and `author` with some dummy data
-3. A basic nodejs-express app which runs on the `www` subdomain.
+### Concept #1: A hasura project
 
-### Accessing Console
+A hasura project is a folder on your filesystem that contains all the source code and configuration for your application.
+A hasura project has a particular structure and the best way to create a hasura project is by cloning one from hasura.io/hub.
 
-Now that you have deployed the project on your cluster, you would want to manage the schema and explore APIs.
+A Hasura project contains:
+
+1. Configuration files for Hasura's ready-made microservices:
+   - eg: the minimum password length for Hasura's instant auth APIs
+   - eg: domains that you want to point to your application
+2. Migration files that capture your data modelling:
+   - Tables and relationships you create give you instant data APIs
+   - These files capture your data modelling and changes you make to your models
+3. Source files for your custom code:
+   - eg: a custom API you wrote that does cool ML-and-the-AI things,
+   - eg: a custom webapp that servers a UI
+
+### Concept #2: A hasura cluster
+
+A Hasura cluster is a cluster of nodes (VMs) on the cloud that can host any Hasura project. It has all the Hasura microservices running and the necessary tooling for you to deploy your Hasura project.
+Every Hasura cluster comes with a name and a domain attached to it as well. Eg: `awesome45.hasura-app.io`.
+
+### Concept #3: Deploying to the hasura cluster
+
+Once you 'add' a Hasura cluster to your Hasura project, running a ``git push hasura master`` will
+deploy your Hasura project to the cluster.
+Your configurations, database schema, and your microservices will get deployed in a single go.
+
+
+## Clone & deploy
+
+Any project on hasura.io/hub can be cloned and deployed. In fact, this hello-world is a hasura project itself.
+
+**Step 1:** Install the hasura CLI: [installation instructions](https://docs.hasura.io/0.15/manual/install-hasura-cli.html)
+
+**Step 2:** Create a hasura project on your machine
+
+```
+$ # 1) Run the quickstart command
+$ hasura quickstart hasura/hello-world
+```
+
+**Step 3:** Deploy the project to your free cluster!
+
+```
+$ # 2) Git add, commit & push to deploy to your cluster
+$ cd hello-world
+$ git add . && git commit -m 'First commit'
+$ git push hasura master
+```
+
+**Note**: Your free cluster got automatically created when you ran the `quickstart` command.
+
+### What got 'deployed'?
+
+This hello-world project contains a sample data schema and some sample data (files in `migrations`) and a simple microservice in nodejs (`microservices/www`). When you ran the `git push` these tables and a microservice and even a subdomain to access your microservice all
+got created.
+
+In the next few steps you'll be browsing the instant Hasura APIs and exploring the custom microservice too.
+
+### Using the API console
+
+The hasura CLI gives you a web UI to manage your data modelling, manage your app users and explore the Hasura APIs.
+The API explorer gives you a collection of all the Hasura APIs and lets you test them easily.
 
 Access the **api-console** via the following command:
 
@@ -31,14 +83,7 @@ $ hasura api-console
 
 This will open up Console UI on the browser. You can access it at [http://localhost:9695](http://localhost:9695)
 
-### Usage
-
-Using the **api-console**, you can explore different Hasura APIs.
-
-The API console will open the API Explorer tab, where you can try out APIs (Data, Auth, Filestore and Notify) using the API Collections on the left.
-
 ## Data APIs
-
 
 The Hasura Data API provides a ready-to-use HTTP/JSON API backed by a PostgreSQL database.
 
@@ -428,54 +473,4 @@ This will append the remotes configuration to the conf/remotes.yaml file under t
 $ git add .
 $ git commit -m "Added a new service"
 $ git push hasura master
-```
-
-## Files and Directories
-
-The project (a.k.a. project directory) has a particular directory structure and it has to be maintained strictly, else `hasura` cli would not work as expected. A representative project is shown below:
-
-```
-.
-├── hasura.yaml
-├── clusters.yaml
-├── conf
-│   ├── authorized-keys.yaml
-│   ├── auth.yaml
-│   ├── ci.yaml
-│   ├── domains.yaml
-│   ├── filestore.yaml
-│   ├── gateway.yaml
-│   ├── http-directives.conf
-│   ├── notify.yaml
-│   ├── postgres.yaml
-│   ├── routes.yaml
-│   └── session-store.yaml
-├── migrations
-│   ├── 1504788327_create_table_user.down.yaml
-│   ├── 1504788327_create_table_user.down.sql
-│   ├── 1504788327_create_table_user.up.yaml
-│   └── 1504788327_create_table_user.up.sql
-└── services
-    └── www
-        ├── src/
-        ├── k8s.yaml
-        └── Dockerfile
-```
-
-### `hasura.yaml`
-
-This file contains some metadata about the project, namely a name, description and some keywords. Also contains `platformVersion` which says which Hasura platform version is compatible with this project.
-
-### `clusters.yaml`
-
-Info about the clusters added to this project can be found in this file. Each cluster is defined by it's name allotted by Hasura. While adding the cluster to the project you are prompted to give an alias, which is just hasura by default. The `kubeContext` mentions the name of kubernetes context used to access the cluster, which is also managed by hasura. The `config` key denotes the location of cluster's metadata on the cluster itself. This information is parsed and cluster's metadata is appended while conf is rendered. `data` key is for holding custom variables that you can define.
-
-```yaml
-- name: h34-ambitious93-stg
-  alias: hasura
-  kubeContext: h34-ambitious93-stg
-  config:
-    configmap: controller-conf
-    namespace: hasura
-  data: null
 ```
