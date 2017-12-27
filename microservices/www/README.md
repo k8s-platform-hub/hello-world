@@ -1,6 +1,5 @@
-# Quickstart - Build your own Docker image#
+# Quickstart - Build your own Docker image
 
-Build the Docker image using the following command
 
 ```bash
 $ docker build -t nodejs-express:<tag> .
