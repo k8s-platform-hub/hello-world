@@ -4,7 +4,7 @@ This quickstart will take you over Hasura's instant backend APIs (BaaS) and how 
 Once you go through this README, you'll be able to configure and use the Hasura APIs for your apps and you'll also
 know how to deploy your own code.
 
-## Basic concepts
+## Basic Hasura concepts
 
 There are 3 core concepts that drive everything you do with Hasura. 1) Hasura projects, 2) Hasura clusters and 3) deploying your project to the cluster. The [hasura CLI](https://docs.hasura.io/0.15/manual/install-hasura-cli.html) tool is required to run manage everything Hasura.
 
@@ -473,54 +473,4 @@ This will append the remotes configuration to the conf/remotes.yaml file under t
 $ git add .
 $ git commit -m "Added a new service"
 $ git push hasura master
-```
-
-## Files and Directories
-
-The project (a.k.a. project directory) has a particular directory structure and it has to be maintained strictly, else `hasura` cli would not work as expected. A representative project is shown below:
-
-```
-.
-├── hasura.yaml
-├── clusters.yaml
-├── conf
-│   ├── authorized-keys.yaml
-│   ├── auth.yaml
-│   ├── ci.yaml
-│   ├── domains.yaml
-│   ├── filestore.yaml
-│   ├── gateway.yaml
-│   ├── http-directives.conf
-│   ├── notify.yaml
-│   ├── postgres.yaml
-│   ├── routes.yaml
-│   └── session-store.yaml
-├── migrations
-│   ├── 1504788327_create_table_user.down.yaml
-│   ├── 1504788327_create_table_user.down.sql
-│   ├── 1504788327_create_table_user.up.yaml
-│   └── 1504788327_create_table_user.up.sql
-└── services
-    └── www
-        ├── src/
-        ├── k8s.yaml
-        └── Dockerfile
-```
-
-### `hasura.yaml`
-
-This file contains some metadata about the project, namely a name, description and some keywords. Also contains `platformVersion` which says which Hasura platform version is compatible with this project.
-
-### `clusters.yaml`
-
-Info about the clusters added to this project can be found in this file. Each cluster is defined by it's name allotted by Hasura. While adding the cluster to the project you are prompted to give an alias, which is just hasura by default. The `kubeContext` mentions the name of kubernetes context used to access the cluster, which is also managed by hasura. The `config` key denotes the location of cluster's metadata on the cluster itself. This information is parsed and cluster's metadata is appended while conf is rendered. `data` key is for holding custom variables that you can define.
-
-```yaml
-- name: h34-ambitious93-stg
-  alias: hasura
-  kubeContext: h34-ambitious93-stg
-  config:
-    configmap: controller-conf
-    namespace: hasura
-  data: null
 ```
