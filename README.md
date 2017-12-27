@@ -1,23 +1,59 @@
 # Hasura Hello World
-> Get started with a free Hasura Project
 
-This quickstart consists of a basic hasura project with a simple nodejs express app running on it. Once this project is deployed on to a hasura cluster, you will have the nodejs app will run at https://www.cluster-name.hasura-app.io
+This quickstart will take you over Hasura's instant backend APIs (BaaS) and how to deploy your custom code too.
 
-## Sections
+## Basic concepts
 
-* [Introduction](#introduction)
-* [Data API](#data-apis)
-* [Auth API](#auth-apis)
-* [Filestore API](#file-apis)
-* [Notify API](#notify-apis)
-* [Custom Microservice](#add-your-own-custom-microservice)
+There are 3 core concepts that drive everything you do with Hasura. 1) Hasura projects, 2) Hasura clusters and 3) deploying your project to the cluster. The [hasura CLI](https://docs.hasura.io/0.15/manual/install-hasura-cli.html) tool is required to run manage everything Hasura.
 
-## Introduction
+![core-hasura-concepts](https://docs.hasura.io/0.15/_images/core-hasura-concepts.png)
 
-This quickstart project comes with the following by default:
-1. A basic hasura project
-2. Two tables `article` and `author` with some dummy data
-3. A basic nodejs-express app which runs on the `www` subdomain.
+### Concept #1: A hasura project
+
+A hasura project is a folder on your filesystem that contains all the source code and configuration for your application.
+A hasura project has a particular structure and the best way to create a hasura project is by cloning one from hasura.io/hub.
+
+Hasura breaks your entire application into a collection of microservices. There are few ready-made microservices which give you instant backend APIs you can use in your app directly, like data, auth and filestore. The data and auth microservices are backed by Postgres.
+
+The configurations for these microservices and the schema of your data models you create for your application are stored inside your hasur project. They are in the `conf/` and `migrations/` directories respectively.
+
+Your application will probably have custom code too. These are custom microservices too, with source code and configurations written by you. These are in the `microservices/` directory.
+
+![hasura-project-structure](https://docs.hasura.io/0.15/_images/hasura-project-structure.png)
+
+### Concept #2: A hasura cluster
+
+A Hasura cluster is a cluster of nodes (VMs) on the cloud that can host any Hasura project. It has all the Hasura microservices running and the necessary tooling for you to deploy your Hasura project.
+
+![hasura-cluster](https://docs.hasura.io/0.15/_images/hasura-cluster.png)
+
+### Concept #3: Deploying to the hasura cluster
+
+Once you 'add' a Hasura cluster to your Hasura project, running ``git push hasura master`` will
+deploy your Hasura project. Your configurations, database schema, and your microservices will get deployed in a single go.
+
+## Clone & deploy
+
+Any project on hasura.io/hub can be cloned and deployed. In fact, this hello-world is a hasura project itself.
+
+**Step 1:** Install the hasura CLI: [installation instructions](https://docs.hasura.io/0.15/manual/install-hasura-cli.html)
+
+**Step 2:** Create a hasura project on your machine
+
+```
+$ # 1) Run the quickstart command
+$ hasura quickstart hasura/hello-world
+
+**Step 3:** Deploy the project to your free cluster!
+
+```
+$ # 2) Git add, commit & push to deploy to your cluster
+$ cd hello-world
+$ git add . && git commit -m 'First commit'
+$ git push hasura master
+```
+
+**Note**: Your free cluster got automatically created when you ran the `quickstart` command.
 
 ### Accessing Console
 

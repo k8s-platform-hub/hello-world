@@ -1,5 +1,7 @@
-description: A basic hasura project with some sample data
-keywords: hello-world, getting-started
+description: |
+  This quickstart will give you a fast but solid introduction to using hasura.
+  Follow the steps in the README to get started!
+keywords: hello-world, getting-started, hasura, tutorial, quickstart
 media: {}
 name: hello-world
-platformVersion: v0.15.8
+platformVersion: v0.15.21
