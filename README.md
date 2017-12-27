@@ -1,6 +1,8 @@
 # Hasura Hello World
 
 This quickstart will take you over Hasura's instant backend APIs (BaaS) and how to deploy your custom code too.
+Once you go through this README, you'll be able to configure and use the Hasura APIs for your apps and you'll also
+know how to deploy your own code.
 
 ## Basic concepts
 
@@ -16,7 +18,8 @@ A hasura project has a particular structure and the best way to create a hasura 
 A Hasura project contains:
 
 1. Configuration files for Hasura's ready-made microservices:
-   - eg: adding domains, minimum password length for Hasura's instant auth APIs
+   - eg: the minimum password length for Hasura's instant auth APIs
+   - eg: domains that you want to point to your application
 2. Migration files that capture your data modelling:
    - Tables and relationships you create give you instant data APIs
    - These files capture your data modelling and changes you make to your models
@@ -27,11 +30,14 @@ A Hasura project contains:
 ### Concept #2: A hasura cluster
 
 A Hasura cluster is a cluster of nodes (VMs) on the cloud that can host any Hasura project. It has all the Hasura microservices running and the necessary tooling for you to deploy your Hasura project.
+Every Hasura cluster comes with a name and a domain attached to it as well. Eg: `awesome45.hasura-app.io`.
 
 ### Concept #3: Deploying to the hasura cluster
 
-Once you 'add' a Hasura cluster to your Hasura project, running ``git push hasura master`` will
-deploy your Hasura project. Your configurations, database schema, and your microservices will get deployed in a single go.
+Once you 'add' a Hasura cluster to your Hasura project, running a ``git push hasura master`` will
+deploy your Hasura project to the cluster.
+Your configurations, database schema, and your microservices will get deployed in a single go.
+
 
 ## Clone & deploy
 
@@ -57,9 +63,17 @@ $ git push hasura master
 
 **Note**: Your free cluster got automatically created when you ran the `quickstart` command.
 
-### Accessing Console
+### What got 'deployed'?
 
-Now that you have deployed the project on your cluster, you would want to manage the schema and explore APIs.
+This hello-world project contains a sample data schema and some sample data (files in `migrations`) and a simple microservice in nodejs (`microservices/www`). When you ran the `git push` these tables and a microservice and even a subdomain to access your microservice all
+got created.
+
+In the next few steps you'll be browsing the instant Hasura APIs and exploring the custom microservice too.
+
+### Using the API console
+
+The hasura CLI gives you a web UI to manage your data modelling, manage your app users and explore the Hasura APIs.
+The API explorer gives you a collection of all the Hasura APIs and lets you test them easily.
 
 Access the **api-console** via the following command:
 
@@ -69,14 +83,7 @@ $ hasura api-console
 
 This will open up Console UI on the browser. You can access it at [http://localhost:9695](http://localhost:9695)
 
-### Usage
-
-Using the **api-console**, you can explore different Hasura APIs.
-
-The API console will open the API Explorer tab, where you can try out APIs (Data, Auth, Filestore and Notify) using the API Collections on the left.
-
 ## Data APIs
-
 
 The Hasura Data API provides a ready-to-use HTTP/JSON API backed by a PostgreSQL database.
 
