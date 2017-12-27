@@ -13,19 +13,15 @@ There are 3 core concepts that drive everything you do with Hasura. 1) Hasura pr
 A hasura project is a folder on your filesystem that contains all the source code and configuration for your application.
 A hasura project has a particular structure and the best way to create a hasura project is by cloning one from hasura.io/hub.
 
-Hasura breaks your entire application into a collection of microservices. There are few ready-made microservices which give you instant backend APIs you can use in your app directly, like data, auth and filestore. The data and auth microservices are backed by Postgres.
+A Hasura project contains:
 
-The configurations for these microservices and the schema of your data models you create for your application are stored inside your hasur project. They are in the `conf/` and `migrations/` directories respectively.
-
-Your application will probably have custom code too. These are custom microservices too, with source code and configurations written by you. These are in the `microservices/` directory.
-
-![hasura-project-structure](https://docs.hasura.io/0.15/_images/hasura-project-structure.png)
+1. Configuration files (eg: adding domains, minimum password length for Hasura's instant auth APIs)
+2. Data modelling, tables and relationships you create. Stored as 'migrations'
+3. Your own custom code (eg: a custom API that does cool the ML and the AI things, or a custom webapp)
 
 ### Concept #2: A hasura cluster
 
 A Hasura cluster is a cluster of nodes (VMs) on the cloud that can host any Hasura project. It has all the Hasura microservices running and the necessary tooling for you to deploy your Hasura project.
-
-![hasura-cluster](https://docs.hasura.io/0.15/_images/hasura-cluster.png)
 
 ### Concept #3: Deploying to the hasura cluster
 
@@ -43,6 +39,7 @@ Any project on hasura.io/hub can be cloned and deployed. In fact, this hello-wor
 ```
 $ # 1) Run the quickstart command
 $ hasura quickstart hasura/hello-world
+```
 
 **Step 3:** Deploy the project to your free cluster!
 
