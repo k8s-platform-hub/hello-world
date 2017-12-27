@@ -15,9 +15,14 @@ A hasura project has a particular structure and the best way to create a hasura 
 
 A Hasura project contains:
 
-1. Configuration files (eg: adding domains, minimum password length for Hasura's instant auth APIs)
-2. Data modelling, tables and relationships you create. Stored as 'migrations'
-3. Your own custom code (eg: a custom API that does cool the ML and the AI things, or a custom webapp)
+1. Configuration files for Hasura's ready-made microservices:
+   - eg: adding domains, minimum password length for Hasura's instant auth APIs
+2. Migration files that capture your data modelling:
+   - Tables and relationships you create give you instant data APIs
+   - These files capture your data modelling and changes you make to your models
+3. Source files for your custom code:
+   - eg: a custom API you wrote that does cool ML-and-the-AI things,
+   - eg: a custom webapp that servers a UI
 
 ### Concept #2: A hasura cluster
 
