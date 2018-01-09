@@ -459,13 +459,13 @@ $ hasura conf generate-route <service-name> >> conf/routes.yaml
 
 It will generate the route configuration for the service and append it to `conf/routes.yaml`.
 
-### Add a remote for the service
+### Add a remote for the service [Only for git push based services]
 
 ```bash
-$ hasura conf generate-route <service-name> >> conf/ci.yaml
+$ hasura conf generate-remote <service-name> >> conf/ci.yaml
 ```
 
-This will append the remotes configuration to the conf/remotes.yaml file under the {{ cluster.name }} key.
+This will append the remotes configuration to the conf/ci.yaml file under the {{ cluster.name }} key.
 
 ### Apply your changes
 
