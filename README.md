@@ -390,6 +390,15 @@ Every app almost always requires some form of authentication. This is useful to 
 
 You can try out these in the `API EXPLORER` tab of the `api console`. To learn more, check out our [docs](https://docs.hasura.io/0.15/manual/users/index.html)
 
+### Add instant authentication via Hasura’s web UI kit
+
+Every project comes with an Authentication kit, you can restrict the access to your app to specific user roles.
+It comes with a UI for Signup and Login pages out of the box, which takes care of user registration and signing in.
+
+![Auth UI](https://docs.hasura.io/0.15/_images/uikit-dark.png)
+
+Follow the [Authorization docs](https://docs.hasura.io/0.15/manual/users/uikit.html) to add Authentication kit to your app.
+
 ## File APIs
 
 Sometimes, you would want to upload some files to the cloud. This can range from a profile pic for your user or images for things listed on your app. You can securely add, remove, manage, update files such as pictures, videos, documents using the Hasura filestore.
@@ -403,7 +412,7 @@ Just like the Data service, the File API supports Role based access control to t
 Uploading a file requires you to generate a file_id and make a post request with the content of the file in the request body and the correct mime type as the content-type header.
 
 ```http
-POST https://filestore.project-name.hasura-app.io/v1/file/05c40f1e-cdaf-4e29-8976-38c899 HTTP/1.1
+POST https://filestore.cluster-name.hasura-app.io/v1/file/05c40f1e-cdaf-4e29-8976-38c899 HTTP/1.1
 Content-Type: image/png
 Authorization: Bearer <token>
 
@@ -417,7 +426,7 @@ Downloading a file requires the unique file id that was used to upload it. This 
 
 To download a particular file, what is required is a simple GET query.
 ```http
-GET https://filestore.project-name.hasura-app.io/v1/file/05c40f1e-cdaf-4e29-8976-38c899 HTTP/1.1
+GET https://filestore.cluster-name.hasura-app.io/v1/file/05c40f1e-cdaf-4e29-8976-38c899 HTTP/1.1
 Authorization: Bearer <token>
 ```
 
@@ -440,13 +449,13 @@ Check out the [ Learning center ](http://localhost:9695/learning-center) tab on 
 ### Docker microservice
 
 ```
-$ hasura microservice generate <service-name> -i <docker-image> -p <port>
+$ hasura microservice create <service-name> -i <docker-image> -p <port>
 ```
 
 ### git push microservice
 
 ```bash
-$ hasura microservice generate <service-name>
+$ hasura microservice create <service-name>
 ```
 
 Once you have added a new service, you need to add a route to access the service.
