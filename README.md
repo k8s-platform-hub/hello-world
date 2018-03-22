@@ -1,12 +1,12 @@
 # Hasura Hello World
 
 This quickstart will take you over Hasura's instant backend APIs (BaaS) and how to deploy your custom code too.
-Once you go through this README, you'll be able to configure and use the Hasura APIs for your apps and you'll also
+Once you go through this README, you'll be able to configure and use the Hasura APIs for your apps and you'll also 
 know how to deploy your own code.
 
 ## Basic Hasura concepts
 
-There are 3 core concepts that drive everything you do with Hasura. 1) Hasura projects, 2) Hasura clusters and 3) deploying your project to the cluster. The [hasura CLI](https://docs.hasura.io/0.15/manual/install-hasura-cli.html) tool is required to run manage everything Hasura.
+There are 3 core concepts that drive everything you do with Hasura. 1) Hasura projects, 2) Hasura clusters and 3) Deploying your project to the cluster. The [hasura CLI](https://docs.hasura.io/0.15/manual/install-hasura-cli.html) tool is required to run manage everything Hasura.
 
 ![core-hasura-concepts](https://docs.hasura.io/0.15/_images/core-hasura-concepts.png)
 
@@ -65,10 +65,9 @@ $ git push hasura master
 
 ### What got 'deployed'?
 
-This hello-world project contains a sample data schema and some sample data (files in `migrations`) and a simple microservice in nodejs (`microservices/www`). When you ran the `git push` these tables and a microservice and even a subdomain to access your microservice all
-got created.
+This hello-world project contains a sample data schema and some sample data (files in `migrations`). When you ran the `git push` these tables got created.
 
-In the next few steps you'll be browsing the instant Hasura APIs and exploring the custom microservice too.
+In the next few steps you'll be browsing the instant Hasura APIs and exploring adding custom microservice too.
 
 ### Using the API console
 
@@ -85,17 +84,18 @@ This will open up Console UI on the browser. You can access it at [http://localh
 
 ## Data APIs
 
-The Hasura Data API provides a ready-to-use HTTP/JSON API backed by a PostgreSQL database.
+The Hasura Data API provides ready-to-use GraphQL APIs and also a HTTP/JSON API backed by a PostgreSQL database.
 
 These APIs are designed to be used by any client capable of making HTTP requests, especially
 and are carefully optimized for performance.
 
 The Data API provides the following features:
+* GraphQL APIs with authorisation.
 * CRUD APIs on PostgreSQL tables with a MongoDB-esque JSON query syntax.
 * Rich query syntax that supports complex queries using relationships.
 * Role based access control to handle permissions at a row and column level.
 
- The url to be used to make these queries is always of the type: `https://data.cluster-name.hasura-app.io/v1/query` (in this case `https://data.h34-excise98-stg.hasura-app.io`)
+ The url to be used to make these queries is always of the type: `https://data.cluster-name.hasura-app.io/v1/query` (in this case `https://data.awesome45.hasura-app.io`)
 
 As mentioned earlier, this quickstart app comes with two pre-created tables `author` and `article`.
 
@@ -114,109 +114,88 @@ id | serial NOT NULL *primary key*
 title | text NOT NULL
 content | text NOT NULL
 rating | numeric NOT NULL
-author_id | integer NOT NULL
+author_id | integer NOT NULL *foreign key*
 
 
-Alternatively, you can also view the schema for these tables on the api console by heading over to the tab named `data`.
+Alternatively, you can also view the schema for these tables on the api console by heading over to the tab named `Data`.
 
 You can just paste the queries shown below into the json textbox in the API explorer and hit send to test them out.
 (The following is a short set of examples to show the power of the Hasura Data APIs, check out our [documentation](https://docs.hasura.io/) for more when you're done here!)
 
 Let's look at some sample queries to explore the Data APIs:
 
-### CRUD
-Simple CRUD Operations are supported via an intuitive JSON query language.
+### GraphQL Operations
+GraphQL Operations are supported by Hasura Data APIs.
 
-* Select all entries in the article table, ordered by rating:
-```json
-{
-    "type": "select",
-    "args": {
-        "table": "article",
-        "columns": ["*"],
-        "order_by": [
-            {
-                "column": "rating"
-            }
-        ]
-    }
+* Select all entries in the article table, ordered by desc rating:
+```graphql
+
+query fetch_article {
+  article (order_by: ["-rating"]) {
+    id
+    title
+    content
+    rating
+    author_id
+  }
 }
+
 ```
 
 * Update a particular entry in the author table:
-```json
-{
-    "type": "update",
-    "args": {
-        "table": "author",
-        "where": {
-            "name": {
-                "$eq": "Adams"
-            }
-        }
+```graphql
+
+mutation update_author {
+  update_author(where: {id: {_eq: 111}} _set: {name: "yoha"}) {
+    affected_rows
+    returning {
+      id
+      name
     }
+  }
 }
+
 ```
 
-* The where clause on the Data API is a very expressive boolean expression, and can be arbitrarily complex. For example:
-```json
-{
-    "type": "select",
-    "args": {
-        "table": "article",
-        "columns": [
-            "content",
-            "rating"
-        ],
-        "where": {
-            "$and": [
-                {
-                    "$or": [
-                        {
-                            "author_id": {
-                                "$eq": "7"
-                            }
-                        },
-                        {
-                            "title": {
-                                "$like": "Editorial%"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "rating": {
-                        "$gte": "3"
-                    }
-                }
-            ]
-        },
-        "order_by": [
-            {
-                "column": "rating",
-                "order": "asc"
-            }
+* The where clause on the GraphQL API is a very expressive boolean expression, and can be arbitrarily complex. For example:
+```graphql
+
+query fetch_article {
+  article(where: {
+    _and: [
+      { 
+        _or: [
+            {author_id: {_eq: 12}},
+          {title: {_like: "%dolor"}}
         ]
-    }
+        rating: {_gte: 3}
+      }
+    ]
+  } order_by: ["-rating"]) {
+    content
+    rating
+  }
 }
+
 ```
 
-  This query will select all the articles with ratings above 3, which were either written by an author with author_id 7 or, which have a title starting with "Editorial". This can be used to construct complex queries that feel very intuitive.
+  This query will select all the articles with ratings above 3, which were either written by an author with author_id 12 or, which have a title with the word "dolor". This can be used to construct complex queries that feel very intuitive.
 
 * Pagination on queries is supported through limit and offset parameters:
-```json
-{
-    "type": "select",
-    "args": {
-        "table": "article",
-        "columns": ["*"],
-        "limit": "10",
-        "offset": "20"
-    }
+```graphql
+
+query fetch_article {
+  article (limit: 10 offset: 20) {
+    id
+    title
+    content
+    author_id
+  }
 }
+
 ```
 
-* Raw SQL:  The APIs support running arbitrary SQL queries through a run_sql type key.
+* Raw SQL:  The JSON APIs support running arbitrary SQL queries through a run_sql type key.
 
 This can be used to perform queries directly on the postgres db:
 ```json
@@ -240,61 +219,37 @@ In the standard article-author sample schema, the relationships we can define ar
 2. Authors have an array/one-to-many relationship with articles.
 
 We can define these relationships on the database, and use them to get related data by expanding the relationships in the columns array:
-```json
-{
-    "type": "select",
-    "args": {
-        "table": "author",
-        "columns": [
-            "name",
-            {
-                "name": "articles",
-                "columns": [
-                    "content",
-                    "title",
-                    "rating"
-                ]
-            }
-        ]
+```graphql
+
+query fetch_author {
+  author {
+    name
+    articles {
+      title
+      content
+      rating
     }
+  }
 }
+
 ```
 
 This query will add an array of article objects alongside the name of the author.
 
 You can also use the standard where/order_by/offset/limit conditions on the article objects:
-```json
-{
-    "type": "select",
-    "args": {
-        "table": "author",
-        "columns": [
-            "name",
-            {
-                "name": "articles",
-                "columns": [
-                    "content",
-                    "title",
-                    "rating"
-                ],
-                "where": {
-                    "rating": {
-                        "$gte": "3"
-                    }
-                },
-                "order_by": [{
-                    "column": "rating",
-                    "order": "desc"
-                }]
-            }
-        ],
-        "where": {
-            "name": {
-                "$like": "A%"
-            }
-        }
+```graphql
+
+query fetch_author {
+  author (where: {name: {_like: "A%"}}) {
+    name
+    articles (where: {rating: {_gt: 3}} order_by: ["-rating"] ) {
+      title
+      content
+      rating
     }
+  }
 }
+
 ```
 
 This will get us a list of all articles with rating greater than 3 by authors with names starting with A, ordered by rating among articles by the same author.
