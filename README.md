@@ -81,9 +81,6 @@ $ hasura api-console
 
 This will open up Console UI on the browser. You can access it at [http://localhost:9695](http://localhost:9695)
 
-![hasura api-console](https://filestore.hasura.io/v1/file/463f07f7-299d-455e-a6f8-ff2599ca8402)
-
-
 * You can create tables using the api-console. Access it at [http://localhost:9695/data/schema/table/add](http://localhost:9695/data/schema/table/add)
 
 
@@ -109,6 +106,10 @@ query fetch_article {
 }
 
 ```
+
+The above query can be made on the api-console to test out responses.
+
+![create table api-console](https://filestore.hasura.io/v1/file/517b66e4-a332-4c4e-9a41-573e84f6e8b1)
 
 * `Mutation`: Update author table where id is 111 and set name as "yoha".
 ```graphql
