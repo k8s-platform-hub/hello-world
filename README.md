@@ -32,19 +32,6 @@ This hello-world project contains a sample data schema and some sample data (fil
 
 In the next few steps you'll be browsing the instant Hasura APIs and exploring adding custom microservice too.
 
-### Using the API console
-
-The hasura CLI gives you a web UI to manage your data modelling, manage your app users and explore the Hasura APIs.
-The API explorer gives you a collection of all the Hasura APIs and lets you test them easily.
-
-Access the **api-console** via the following command:
-
-```
-$ hasura api-console
-```
-
-This will open up Console UI on the browser. You can access it at [http://localhost:9695](http://localhost:9695)
-
 ## GraphQL / Data APIs
 
 The Hasura Data API provides ready-to-use GraphQL APIs and also a HTTP/JSON API backed by a PostgreSQL database.
@@ -58,7 +45,7 @@ The Data API provides the following features:
 * Rich query syntax that supports complex queries using relationships.
 * Role based access control to handle permissions at a row and column level.
 
- The url to be used to make these queries is always of the type: `https://data.cluster-name.hasura-app.io/v1/query` (in this case `https://data.awesome45.hasura-app.io`)
+ The url to be used to make these queries is always of the type: `https://data.cluster-name.hasura-app.io/v1/query` (in this case `https://data.awesome45.hasura-app.io`) and for GraphQL its `https://data.cluster-name.hasura-app.io/v1alpha1/graphql`.
 
 As mentioned earlier, this quickstart app comes with two pre-created tables `author` and `article`.
 
@@ -79,15 +66,36 @@ content | text NOT NULL
 rating | numeric NOT NULL
 author_id | integer NOT NULL *foreign key*
 
-
 Alternatively, you can also view the schema for these tables on the api console by heading over to the tab named `Data`.
+
+### Using the API console
+
+The hasura CLI gives you a web UI to manage your data modelling, manage your app users and explore the Hasura APIs.
+The API explorer gives you a collection of all the Hasura APIs and lets you test them easily.
+
+Access the **api-console** via the following command:
+
+```
+$ hasura api-console
+```
+
+This will open up Console UI on the browser. You can access it at [http://localhost:9695](http://localhost:9695)
+
+![hasura api-console](https://filestore.hasura.io/v1/file/463f07f7-299d-455e-a6f8-ff2599ca8402)
+
+
+* You can create tables using the api-console. Access it at [http://localhost:9695/data/schema/table/add](http://localhost:9695/data/schema/table/add)
+
+
+![create table api-console](https://filestore.hasura.io/v1/file/fa421020-d241-4dc9-b0c2-b3cf64838da9)
+
 
 Let's look at a sample query to explore the Data APIs:
 
 ### GraphQL Operations
 GraphQL Operations are supported by Hasura Data APIs.
 
-* Select all entries in the article table, ordered by desc rating:
+* `Query`: Select all entries in the article table, ordered by desc rating:
 ```graphql
 
 query fetch_article {
@@ -102,7 +110,28 @@ query fetch_article {
 
 ```
 
+* `Mutation`: Update author table where id is 111 and set name as "yoha".
+```graphql
+mutation update_author {
+  update_author(where: {id: {_eq: 111}} _set: {name: "yoha"}) {
+    affected_rows
+    returning {
+      id
+      name
+    }
+  }
+}
+```
+
 For more examples of GraphQL queries, check out the [docs](https://docs.hasura.io/0.15/manual/data/graphql.html)
+
+### Relationships
+
+The data APIs lets you define relationships based on these foreign key constraints. Read more about it [here](https://docs.hasura.io/0.15/manual/data/relationships.html)
+
+### Permissions
+
+The permission layer of the data APIs lets you define row level and column level access control policies for various roles. Read more about it [here](https://docs.hasura.io/0.15/manual/data/permissions.html)
 
 ## Auth APIs
 
@@ -180,33 +209,19 @@ GET https://filestore.cluster-name.hasura-app.io/v1/file/05c40f1e-cdaf-4e29-8976
 Authorization: Bearer <token>
 ```
 
-## Notify APIs
-
-Check out the [ Learning center ](http://localhost:9695/learning-center) tab on the API Console for short tutorials on all the APIs!
-
 ## Add your own custom microservice
 
-### Docker microservice
-
-```
-$ hasura microservice create <service-name> -i <docker-image> -p <port>
-```
-
-### git push microservice
-
-```bash
-$ hasura microservice create <service-name>
-```
-
-Once you have added a new service, you need to add a route to access the service.
-
-Let's say you want to add a microservice already present in another Hub project, you can make use of `hasura clone`. You can quickly add a Node.js microservice by running the following:
+Let's say you want to add a microservice. You can choose one that's already present in another Hub project, you can make use of `hasura clone`. You can quickly add a Node.js microservice by running the following:
 
 ```bash
 $ hasura microservice clone api --from hasura/hello-nodejs-express
 ```
 
 This will clone the api microservice from hello-nodejs-express project available on Hub.
+
+You can add a microservice using your own Dockerfile and source-code. Check out [docs](https://docs.hasura.io/0.15/manual/microservices/add-microservice/using-custom-dockerfile.html) to know how to create the same.
+
+Once you have added a new service, you need to add a route to access the service.
 
 ### Add route for the service created.
 
@@ -216,7 +231,7 @@ $ hasura conf generate-route <service-name> >> conf/routes.yaml
 
 It will generate the route configuration for the service and append it to `conf/routes.yaml`.
 
-### Add a remote for the service [Only for git push based services]
+### Add a remote for the service (Only for git push based services)
 
 ```bash
 $ hasura conf generate-remote <service-name> >> conf/ci.yaml
