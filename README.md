@@ -32,45 +32,24 @@ This hello-world project contains a sample data schema and some sample data (fil
 
 In the next few steps you'll be browsing the instant Hasura APIs and exploring adding custom microservice too.
 
-## GraphQL / Data APIs
+## Data APIs / GraphQL
 
-The Hasura Data API provides ready-to-use GraphQL APIs and also a HTTP/JSON API backed by a PostgreSQL database.
+The Hasura Data API provides ready-to-use GraphQL APIs and also an HTTP/JSON API backed by a PostgreSQL database.
 
 These APIs are designed to be used by any client capable of making HTTP requests, especially
-and are carefully optimized for performance.
+and are carefully optimized for performance. It also supports role-based access control to handle permissions at a row and column level.
 
-The Data API provides the following features:
-* GraphQL APIs with authorisation.
-* CRUD APIs on PostgreSQL tables with a MongoDB-esque JSON query syntax.
-* Rich query syntax that supports complex queries using relationships.
-* Role based access control to handle permissions at a row and column level.
-
- The url to be used to make these queries is always of the type: `https://data.cluster-name.hasura-app.io/v1/query` (in this case `https://data.awesome45.hasura-app.io`) and for GraphQL its `https://data.cluster-name.hasura-app.io/v1alpha1/graphql`.
+ The URL to be used to make the GraphQL queries will be `https://data.cluster-name.hasura-app.io/v1alpha1/graphql`.
 
 As mentioned earlier, this quickstart app comes with two pre-created tables `author` and `article`.
 
-#### author
+![article-author-schema](https://filestore.hasura.io/v1/file/d5262259-282f-4b8a-b214-13e4d860b966)
 
-column | type
---- | ---
-id | integer NOT NULL *primary key*
-name | text NOT NULL
-
-#### article
-
-column | type
---- | ---
-id | serial NOT NULL *primary key*
-title | text NOT NULL
-content | text NOT NULL
-rating | numeric NOT NULL
-author_id | integer NOT NULL *foreign key*
-
-Alternatively, you can also view the schema for these tables on the api console by heading over to the tab named `Data`.
+Alternatively, you can also view the schema for these tables on the api-console by heading over to the tab named `Data`.
 
 ### Using the API console
 
-The hasura CLI gives you a web UI to manage your data modelling, manage your app users and explore the Hasura APIs.
+The hasura CLI gives you a web UI to manage your data modeling, manage your app users and explore the Hasura APIs.
 The API explorer gives you a collection of all the Hasura APIs and lets you test them easily.
 
 Access the **api-console** via the following command:
@@ -136,10 +115,10 @@ The permission layer of the data APIs lets you define row level and column level
 
 ## Auth APIs
 
-Every app almost always requires some form of authentication. This is useful to identify a user and provide some sort of personalised experience to the user. Hasura provides various types of authentication (username/password, mobile/otp, email/password, Google, Facebook etc).
+Every app almost always requires some form of authentication. This is useful to identify a user and provide some sort of personalized experience to the user. Hasura provides various types of authentication (username/password, mobile/otp, email/password, Google, Facebook etc).
 
 ### Signup
-Lets look at an example for simple username/password signup.
+Let's look at an example of simple username/password signup.
 
 * Signup using username and password:
 POST `auth.cluster-name.hasura-app.io/v1/signup` HTTP/1.1
@@ -224,7 +203,7 @@ You can add a microservice using your own Dockerfile and source-code. Check out 
 
 Once you have added a new service, you need to add a route to access the service.
 
-### Add route for the service created.
+### Add the ​route for the service created.
 
 ```bash
 $ hasura conf generate-route <service-name> >> conf/routes.yaml
