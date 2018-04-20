@@ -1,7 +1,6 @@
+clusters:
 - alias: hasura
-  config:
-    configmap: controller-conf
-    namespace: brunet75-hasura
   data: null
-  kubeContext: brunet75
-  name: brunet75
+  infra:
+    provider: hasura-free
+version: v1
