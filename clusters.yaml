@@ -1,7 +1,7 @@
 - alias: hasura
   config:
     configmap: controller-conf
-    namespace: hasura
+    namespace: brunet75-hasura
   data: null
-  kubeContext: h34-dang36-stg
-  name: h34-dang36-stg
+  kubeContext: brunet75
+  name: brunet75
