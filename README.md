@@ -145,7 +145,7 @@ Typical response of a signup request looks like:
 }
 ```
 
-Once a user is registerd (or signed-up) on Hasura, it attaches a Hasura Identity or (hasura_id) to every user. A Hasura identity is an integer. You can use this value in your application to tie your application’s user to this identity.
+Once a user is registered (or signed-up) on Hasura, it attaches a Hasura Identity or (hasura_id) to every user. A Hasura identity is an integer. You can use this value in your application to tie your application’s user to this identity.
 
 To learn more, check out our [docs](https://docs.hasura.io/0.15/manual/users/index.html)
 
